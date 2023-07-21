@@ -26,20 +26,16 @@ namespace CIneDotNet.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //Conexion Casa
-            //optionsBuilder.UseSqlServer("Data Source=DESKTOP-NH6VC1C\\SQLEXPRESS;Initial Catalog=CineDotNetV2;Integrated Security=True ; Encrypt=false");
-            //conexion Notebook
-            //optionsBuilder.UseSqlServer("Data Source=LAPTOP-UR2EP742\\SQLEXPRESS;Initial Catalog=CineDotNetV2;Integrated Security=True ; Encrypt=false");
-            //conexion Laburo
-            //optionsBuilder.UseSqlServer("Data Source=SISTEMAS01\\SQLEXPRESS;Initial Catalog=CineDotNetV2;Integrated Security=True ; Encrypt=false");
-
+           
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
-            var connectionString = configuration.GetConnectionString("trabajo");
-            optionsBuilder.UseSqlServer(connectionString);
+            //var connectionString = configuration.GetConnectionString("trabajo");
+            //optionsBuilder.UseSqlServer(connectionString);
 
+            var connectionString = configuration.GetConnectionString("casa");
+            optionsBuilder.UseSqlServer(connectionString);
 
         }
 

@@ -1,8 +1,47 @@
-﻿@{
+﻿@model IEnumerable<CIneDotNet.Models.Pelicula>
+@{
     ViewData["Title"] = "Cine.Net";
+    
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<main role="main">
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Cinema Dot Net</h1>
+            <p class="lead text-muted">
+                Bienvenido a CineDotNet, donde la magia del cine cobra vida
+                . Sumérgete en una experiencia única con nuestra amplia selección de películas en modernas salas equipadas con tecnología de última generación
+                . Nuestro amable personal te espera para brindarte una visita inolvidable, con eventos especiales y funciones temáticas
+                . Disfruta de emocionantes proyecciones y deliciosos snacks en un ambiente acogedor y lleno de diversión
+                . Ven a CineDotNet y vive la magia del cine con nosotros.
+            </p>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row">
+               @foreach (var item in Model) {
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <img class="card-img-top" alt=" [100%x225]" style="height: 500px; width: 100%; display: block;" src="~/img/@Html.DisplayFor(modelItem => item.Poster)" data-holder-rendered="true">
+                        <div class="card-body">
+                            <h3>@Html.DisplayFor(modelItem => item.Nombre)</h3>
+                            <p class="card-text">@Html.DisplayFor(modelItem => item.Sinopsis) </p>
+                            <p class="card-text">@Html.DisplayFor(modelItem => item.Duracion) min</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                        <a asp-controller="funcions" asp-action="details" asp-route-id="@item.id"><button class="button">Button</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               }
+            </div>
+        </div>
+    </div>
+
+</main>

@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CIneDotNet.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CIneDotNet.Controllers
 {
+    [Authorize]
     public class FuncionsController : Controller
     {
         private readonly MyContext _context;
+        
 
         public FuncionsController(MyContext context)
         {
