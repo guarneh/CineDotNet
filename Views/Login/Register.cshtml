@@ -1,9 +1,11 @@
-﻿@model CIneDotNet.Models.Usuario;
-@{
+﻿@{
     ViewData["Title"] = "Register";
 }
 
 <main class="form-signin">
+    <form>
+        <img class="mb-4" src="~/img/registerlogo.png" alt="" width="35%" height="35%">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
 
 <h2>Registro de Usuario</h2>
@@ -14,39 +16,23 @@
                 <label asp-for="DNI" for="DNI"></label>
                 <input asp-for="DNI" type="text" class="form-control" id="DNI" placeholder="12345678" />
                 <span asp-validation-for="DNI" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Apellido" class="control-label"></label>
-                <input asp-for="Apellido" type="text" class="form-control" placeholder="name@example.com" />
-                <span asp-validation-for="Apellido" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Mail" class="control-label"></label>
-                <input asp-for="Mail" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" />
-                <span asp-validation-for="Mail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" type="password" class="form-control" id="floatingInput" placeholder="name@example.com" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaNacimiento" class="control-label"></label>
-                <input asp-for="FechaNacimiento" type="date" class="form-control" id="floatingInput" placeholder="name@example.com"     />
-                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
-            </div>
-        <div class="form-group">
-            <input type="submit" value="register" class="btn btn-primary" />
+        </div>
+        </div>
+        </div>
+        </div>
         </div>
     </form>
 
 
-        
-    
+
+
+        <div class="checkbox mb-3">
+            <label>
+                <a asp-action="">Need an account? Register.</a>
+            </label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">crear cuenta</button>
+        <p class="mt-5 mb-3 text-muted">© 2017–2021</p>
+    </form>
 </main>
 

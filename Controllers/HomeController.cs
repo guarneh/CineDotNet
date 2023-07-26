@@ -38,16 +38,5 @@ namespace CIneDotNet.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        public IActionResult ToFunciones()
-        {
-            return RedirectToAction("Index", "Funcions");
-        }
-
-        public async Task<IActionResult> logOut()
-        { 
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "login");
-        }
     }
 }
