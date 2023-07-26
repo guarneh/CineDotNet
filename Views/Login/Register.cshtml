@@ -3,50 +3,45 @@
     ViewData["Title"] = "Register";
 }
 
-<main class="form-signin">
 
-
-<h2>Registro de Usuario</h2>
-
-    <form asp-action="register" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="DNI" for="DNI"></label>
-                <input asp-for="DNI" type="text" class="form-control" id="DNI" placeholder="12345678" />
-                <span asp-validation-for="DNI" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Apellido" class="control-label"></label>
-                <input asp-for="Apellido" type="text" class="form-control" placeholder="name@example.com" />
-                <span asp-validation-for="Apellido" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Mail" class="control-label"></label>
-                <input asp-for="Mail" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" />
-                <span asp-validation-for="Mail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" type="password" class="form-control" id="floatingInput" placeholder="name@example.com" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaNacimiento" class="control-label"></label>
-                <input asp-for="FechaNacimiento" type="date" class="form-control" id="floatingInput" placeholder="name@example.com"     />
-                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
-            </div>
-        <div class="form-group">
-            <input type="submit" value="register" class="btn btn-primary" />
-        </div>
-    </form>
-
-
-        
     
-</main>
+    <main class="form-signin w-100 m-auto">
+        <form asp-action="register" method="post">
+ 
+            <svg xmlns="http://www.w3.org/2000/svg" width="72" height="57" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+            </svg>
+            <h1 class="h3 mb-3 fw-normal">Create Your New Account</h1>
+
+            <div class="form-floating">
+                <input type="text" class="form-control" id="DNI" placeholder="DNI" wfd-id="id0" asp-for="DNI">
+                <label for="DNI">DNI</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="nombre" placeholder="Nombre" wfd-id="id0" asp-for="Nombre">
+                <label for="nombre">Nombre</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="Apellido" placeholder="Apellido" wfd-id="id0" asp-for="Apellido">
+                <label for="Apellido">Apellido</label>
+            </div>
+            <div class="form-floating">
+                <input type="email" class="form-control" id="Mail" placeholder="Mail" wfd-id="id0" asp-for="Mail">
+                <label for="Mail">Mail</label>
+            </div>
+            
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" wfd-id="id1" asp-for="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <div class="form-floating">
+                <input type="date" class="form-control" id="Fecha de Nacimiento" placeholder="Fecha de Nacimiento" wfd-id="id0" asp-for="FechaNacimiento">
+                <label for="Fecha de Nacimiento">Fecha de Nacimiento</label>
+            </div>
+
+ 
+            <button type="submit" asp-action="register">Sign in</button>
+            
+        </form>
+ 
 

@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace CIneDotNet.Controllers
 {
-    [Authorize]
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -37,17 +37,6 @@ namespace CIneDotNet.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public IActionResult ToFunciones()
-        {
-            return RedirectToAction("Index", "Funcions");
-        }
-
-        public async Task<IActionResult> logOut()
-        { 
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "login");
         }
     }
 }
