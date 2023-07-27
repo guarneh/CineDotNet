@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CIneDotNet.Models.Pelicula>
+﻿@model IEnumerable<CIneDotNet.Models.Pelicula>;
 @{
     ViewData["Title"] = "Cine.Net";
     
@@ -33,7 +33,7 @@
                             <p class="card-text">@Html.DisplayFor(modelItem => item.Duracion) min</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                        <a asp-controller="funcions" asp-action="details" asp-route-id="@item.id"><button class="button">Button</button></a>
+                                        <a asp-controller="Funcions" asp-action="VerFunciones" asp-route-id="@item.id"><button class="button">Button</button></a>
                                 </div>
                             </div>
                         </div>

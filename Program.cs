@@ -1,11 +1,12 @@
 using CIneDotNet.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
+builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddDbContext<MyContext>(options =>
 {
@@ -13,13 +14,15 @@ builder.Services.AddDbContext<MyContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("casa"));
 });
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(option =>
-    {
-        option.LoginPath = "/login/signIn";
-        option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-        option.AccessDeniedPath = "/login/register";
-    });
+
+
+builder.Services.AddSession(options =>
+{
+    
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 
 
@@ -38,9 +41,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();;
-
 app.UseAuthorization();
+app.UseSession();
+
 
 app.MapControllerRoute(
     name: "default",

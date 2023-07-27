@@ -1,9 +1,6 @@
 ﻿using CIneDotNet.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Security.Claims;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CIneDotNet.Controllers
@@ -19,41 +16,25 @@ namespace CIneDotNet.Controllers
         }
         public IActionResult Index()
         {
-            ClaimsPrincipal claimUser = HttpContext.User;
-            if (claimUser.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("index", "home");
-            }
-
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> login(Usuario usuario) 
+        public  IActionResult login(string Mail, string Password ) 
         {
             var usuarioActual = _context.usuarios
-                .Where(u => u.Mail.Equals(usuario.Mail) && u.Password.Equals(usuario.Password))
+                .Where(u => u.Mail.Equals(Mail) && u.Password.Equals(Password))
                 .FirstOrDefault();
             if (usuarioActual != null)
             {
-                List<Claim> claims = new List<Claim>()
-                {
-                    new Claim(ClaimTypes.NameIdentifier, usuarioActual.Mail),
-                    new Claim(ClaimTypes.Role, usuarioActual.EsAdmin.ToString())
-                };
-
-                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,
-
-                    CookieAuthenticationDefaults.AuthenticationScheme);
-
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,new ClaimsPrincipal(claimsIdentity));
-                return RedirectToAction("details", "usuarios" , usuarioActual.id);
+                HttpContext.Session.SetInt32("id", usuarioActual.id);
+                return RedirectToAction("Details", "usuarios", usuarioActual);
 
                 
             }
             else
             { 
-                return RedirectToAction("index", "home");
+                return RedirectToAction("index", "login");
             }
                 
         }

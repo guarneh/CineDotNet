@@ -28,10 +28,7 @@ namespace CIneDotNet.Controllers
             return View(await myContext.ToListAsync());
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

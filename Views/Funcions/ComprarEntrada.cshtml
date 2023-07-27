@@ -1,0 +1,27 @@
+﻿@model CIneDotNet.Models.Funcion
+@{
+    ViewData["Title"] = "ComprarEntrada";
+}
+
+<h1>ComprarEntrada</h1>
+
+<div class="row">
+    <div class="col-6">
+        <div>
+            <h2>@Html.DisplayFor(model => model.miPelicula.Nombre)</h2>
+            <p>@Html.DisplayFor(model => model.miPelicula.Sinopsis)</p>
+            <label for="cantEntradas">Cantidad De Entradas</label>
+                
+            <div>
+                    <input type="number" for="cantEntradas"/>
+            </div>
+        </div>
+
+        <button class="mt-4">Comprar</button>
+        
+    </div>
+    <div class="col-6">
+        <img class="card-img-top" alt=" [100%x225]" style="height: 100%; width: 100%; display: block;" src="~/img/@Html.DisplayFor(Model => Model.miPelicula.Poster)" data-holder-rendered="true">
+    </div>
+</div>
+

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CIneDotNet.Controllers
 {
-    [Authorize]
+    
     public class FuncionsController : Controller
     {
         private readonly MyContext _context;
@@ -171,6 +171,35 @@ namespace CIneDotNet.Controllers
         private bool FuncionExists(int id)
         {
           return _context.funciones.Any(e => e.ID == id);
+        }
+        [HttpGet]
+        public IActionResult ComprarEntrada(int id)
+        {
+            if (id==null)
+            {
+                return NotFound();
+            }
+            var funcion = _context.funciones.Include(f => f.miPelicula).Include(f => f.miSala).FirstOrDefault(e => e.ID == id);
+            if (funcion == null)
+            {
+                return NotFound();
+            }
+            return View(funcion);
+        }
+        [HttpGet]
+        public async Task<IActionResult> VerFunciones(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var funciones =  _context.funciones.Include(f => f.miPelicula).Include(f => f.miSala).Where(f => f.idPelicula == id);
+            if (funciones == null)
+            {
+                return NotFound();
+            }
+
+            return View(await funciones.ToListAsync());
         }
     }
 }
