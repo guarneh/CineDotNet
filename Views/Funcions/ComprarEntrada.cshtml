@@ -8,16 +8,19 @@
 <div class="row">
     <div class="col-6">
         <div>
+            <form asp-action="ComprarEntrada" method="post">
             <h2>@Html.DisplayFor(model => model.miPelicula.Nombre)</h2>
             <p>@Html.DisplayFor(model => model.miPelicula.Sinopsis)</p>
             <label for="cantEntradas">Cantidad De Entradas</label>
                 
             <div>
+                    <input type="text" value="@Html.DisplayFor(model => model.ID)" for="idFuncion"/>
                     <input type="number" for="cantEntradas"/>
             </div>
+            </form>
         </div>
 
-        <button class="mt-4">Comprar</button>
+        <button class="mt-4" type="submit" asp-action="ComprarEntrada">Comprar</button>
         
     </div>
     <div class="col-6">

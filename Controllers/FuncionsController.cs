@@ -7,14 +7,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CIneDotNet.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace CIneDotNet.Controllers
 {
-    
+
     public class FuncionsController : Controller
     {
         private readonly MyContext _context;
-        
+
 
         public FuncionsController(MyContext context)
         {
@@ -163,19 +165,19 @@ namespace CIneDotNet.Controllers
             {
                 _context.funciones.Remove(funcion);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool FuncionExists(int id)
         {
-          return _context.funciones.Any(e => e.ID == id);
+            return _context.funciones.Any(e => e.ID == id);
         }
         [HttpGet]
         public IActionResult ComprarEntrada(int id)
         {
-            if (id==null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -186,6 +188,63 @@ namespace CIneDotNet.Controllers
             }
             return View(funcion);
         }
+
+        [HttpPost]
+        public IActionResult ComprarEntrada(int cantClientes, int idFuncion)
+        {
+            var usuarioActual = _context.usuarios.Where(u => u.id == HttpContext.Session.GetInt32("id")).FirstOrDefault();
+            var func = _context.funciones.Where(f => f.ID == idFuncion).FirstOrDefault();
+
+            if (usuarioActual != null && func != null)
+            {
+
+                if (func.cantClientes + cantClientes <= func.miSala.capacidad)
+                {
+                    if (usuarioActual.Credito >= func.costo * cantClientes)
+                    {
+
+                        usuarioActual.MisFunciones.Add(func);
+                        _context.usuarios.Update(usuarioActual);
+                        usuarioActual.Credito = usuarioActual.Credito - func.costo * cantClientes;
+                        func.clientes.Add(usuarioActual);
+                        _context.funciones.Update(func);
+                        _context.SaveChanges();
+                        if (usuarioActual.Tickets.Last<FuncionUsuario>().cantEntradas > 0)
+                        {
+                            usuarioActual.Tickets.Last<FuncionUsuario>().cantEntradas = usuarioActual.Tickets.Last<FuncionUsuario>().cantEntradas + cantClientes;
+                            _context.usuarios.Update(usuarioActual);
+                            _context.SaveChanges();
+                        }
+                        else
+                        {
+                            usuarioActual.Tickets.Last<FuncionUsuario>().cantEntradas = cantClientes;
+                            _context.usuarios.Update(usuarioActual);
+                            _context.SaveChanges();
+                        }
+                        return RedirectToAction("CompraExitosa");
+
+                    }
+                    else
+                    {
+                        return ViewBag.error("no se puede comprar");
+                    }
+
+                }
+                else
+                {
+                    return ViewBag.error("no se puede comprar");
+                }
+
+            }
+            else
+            {
+                return ViewBag.error("no se puede comprar");
+            }
+
+
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> VerFunciones(int id)
         {
@@ -193,7 +252,7 @@ namespace CIneDotNet.Controllers
             {
                 return NotFound();
             }
-            var funciones =  _context.funciones.Include(f => f.miPelicula).Include(f => f.miSala).Where(f => f.idPelicula == id);
+            var funciones = _context.funciones.Include(f => f.miPelicula).Include(f => f.miSala).Where(f => f.idPelicula == id);
             if (funciones == null)
             {
                 return NotFound();
@@ -203,3 +262,6 @@ namespace CIneDotNet.Controllers
         }
     }
 }
+    
+
+
