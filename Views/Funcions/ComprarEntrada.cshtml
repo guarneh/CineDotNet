@@ -11,11 +11,11 @@
             <form asp-action="ComprarEntrada" method="post">
             <h2>@Html.DisplayFor(model => model.miPelicula.Nombre)</h2>
             <p>@Html.DisplayFor(model => model.miPelicula.Sinopsis)</p>
-            <label for="cantEntradas">Cantidad De Entradas</label>
+            <label for="entradas">Cantidad De Entradas</label>
                 
             <div>
-                    <input type="text" value="@Html.DisplayFor(model => model.ID)" for="idFuncion"/>
-                    <input type="number" for="cantEntradas"/>
+                    <input type="text" value="@Html.DisplayFor(model => model.ID)" name="idFuncion"/>
+                    <input type="number" id="entradas" name="cantClientes" />
             </div>
             </form>
         </div>
