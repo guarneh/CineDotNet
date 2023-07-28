@@ -192,8 +192,8 @@ namespace CIneDotNet.Controllers
         [HttpPost]
         public IActionResult ComprarEntrada(int cantClientes, int idFuncion)
         {
-            var usuarioActual = _context.usuarios.Where(u => u.id == HttpContext.Session.GetInt32("id")).FirstOrDefault();
-            var func = _context.funciones.Where(f => f.ID == idFuncion).FirstOrDefault();
+            var usuarioActual = _context.usuarios.Include(u => u.Tickets).Where(u => u.id == HttpContext.Session.GetInt32("id")).FirstOrDefault();
+            var func = _context.funciones.Include(f => f.miPelicula).Include(f => f.miSala).Where(f => f.ID == idFuncion).FirstOrDefault();
 
             if (usuarioActual != null && func != null)
             {
@@ -208,7 +208,7 @@ namespace CIneDotNet.Controllers
                         usuarioActual.Credito = usuarioActual.Credito - func.costo * cantClientes;
                         func.clientes.Add(usuarioActual);
                         _context.funciones.Update(func);
-                        _context.SaveChanges();
+                        
                         if (usuarioActual.Tickets.Last<FuncionUsuario>().cantEntradas > 0)
                         {
                             usuarioActual.Tickets.Last<FuncionUsuario>().cantEntradas = usuarioActual.Tickets.Last<FuncionUsuario>().cantEntradas + cantClientes;
@@ -221,24 +221,24 @@ namespace CIneDotNet.Controllers
                             _context.usuarios.Update(usuarioActual);
                             _context.SaveChanges();
                         }
-                        return RedirectToAction("CompraExitosa");
+                        return RedirectToAction("index","home");
 
                     }
                     else
                     {
-                        return ViewBag.error("no se puede comprar");
+                        return RedirectToAction("CompraErronea", "Funcions");
                     }
 
                 }
                 else
                 {
-                    return ViewBag.error("no se puede comprar");
+                    return RedirectToAction("CompraErronea", "Funcions");
                 }
 
             }
             else
             {
-                return ViewBag.error("no se puede comprar");
+                return RedirectToAction("CompraErronea", "Funcions");
             }
 
 
@@ -259,6 +259,11 @@ namespace CIneDotNet.Controllers
             }
 
             return View(await funciones.ToListAsync());
+        }
+
+        public IActionResult CompraErronea()
+        { 
+            return View();
         }
     }
 }

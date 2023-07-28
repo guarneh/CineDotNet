@@ -27,7 +27,11 @@ namespace CIneDotNet.Controllers
                 .FirstOrDefault();
             if (usuarioActual != null)
             {
+                
                 HttpContext.Session.SetInt32("id", usuarioActual.id);
+                ViewData["userId"] = usuarioActual.id;
+                ViewData["esAdmin"] = usuarioActual.EsAdmin;
+                
                 return RedirectToAction("Details", "usuarios", usuarioActual);
 
                 
