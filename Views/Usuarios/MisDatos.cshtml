@@ -1,0 +1,75 @@
+﻿@model CIneDotNet.Models.Usuario;
+@{
+    ViewData["Title"] = "MisDatos";
+}
+
+<h1>MisDatos</h1>
+
+<div class="row">
+    <div class="col-6">
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Sala
+                        </th>
+                        <th>
+                            Pelicula
+                        </th>
+                        <th>
+                            Fecha
+                        </th>
+                        <th>
+                            Clientes
+                        </th>
+                        <th>
+                           Costo
+                        </th>
+                       
+                        <th>
+                            
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.MisFunciones)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.miSala.ubicacion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.miPelicula.Nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.fecha)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.cantClientes)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.costo)
+                            </td>
+                            <td>
+                                <form asp-action="DevolverEntrada" asp-controller="usuarios" method="post">
+                                    <input type="hidden" name="idFuncion" value="@item.ID">
+                                    <input type="number" name="cantEntradas">
+                                    <button type="submit">Devolver entradas</button>
+                                </form>
+                                
+                                
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+
+    </div>
+    <div class="col-6">
+        
+    </div>
+</div>

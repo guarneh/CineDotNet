@@ -20,7 +20,7 @@ namespace CIneDotNet.Controllers
         }
 
         [HttpPost]
-        public  IActionResult login(string Mail, string Password ) 
+        public  IActionResult Login(string Mail, string Password ) 
         {
             var usuarioActual = _context.usuarios
                 .Where(u => u.Mail.Equals(Mail) && u.Password.Equals(Password))

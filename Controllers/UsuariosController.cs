@@ -156,5 +156,54 @@ namespace CIneDotNet.Controllers
         {
           return _context.usuarios.Any(e => e.id == id);
         }
+
+        public IActionResult MisDatos() 
+        {
+            if (HttpContext.Session.GetInt32("id") != null)
+            {
+                Usuario logueado = _context.usuarios.Include(u => u.MisFunciones).Include(U => U.Tickets).Where(u => u.id == HttpContext.Session.GetInt32("id")).FirstOrDefault();
+                
+                return View(logueado);
+            }
+            else
+            {
+                return RedirectToAction("index","login");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult DevolverEntrada(int idFuncion, int cantEntradas)
+        {
+            Usuario usuarioActual = _context.usuarios.Where(u => u.id == HttpContext.Session.GetInt32("id")).FirstOrDefault();
+            FuncionUsuario fuSelected = _context.funcionUsuarios.Include(fu => fu.funcion).Include(fu => fu.usuario).Where(fu => fu.usuario == usuarioActual && fu.idFuncion == idFuncion).FirstOrDefault();
+            if (fuSelected != null)
+            {
+                if (fuSelected.cantEntradas >= cantEntradas)
+                {
+                    usuarioActual.Credito += fuSelected.funcion.costo * cantEntradas;
+                    fuSelected.cantEntradas -= cantEntradas;
+                    if (fuSelected.cantEntradas == 0)
+                    {
+                        usuarioActual.Tickets.Remove(fuSelected);
+                        fuSelected.funcion.funcionUsuarios.Remove(fuSelected);
+                        fuSelected.funcion.clientes.Remove(usuarioActual);
+                        _context.funcionUsuarios.Remove(fuSelected);
+                        _context.SaveChanges();
+                        return RedirectToAction("index", "home");
+                    }
+                    else
+                    {
+                        _context.usuarios.Update(usuarioActual);
+                        _context.funcionUsuarios.Update(fuSelected);
+                        _context.SaveChanges();
+                        return RedirectToAction("index", "home");
+                    }
+                }
+                else
+                    return NotFound();
+            }
+            else
+                return NotFound();
+        }
     }
 }

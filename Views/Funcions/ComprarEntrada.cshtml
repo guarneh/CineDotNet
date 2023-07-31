@@ -14,7 +14,7 @@
             <label for="entradas">Cantidad De Entradas</label>
                 
             <div>
-                    <input type="text" value="@Html.DisplayFor(model => model.ID)" name="idFuncion"/>
+                    <input type="hidden" value="@Html.DisplayFor(model => model.ID)" name="idFuncion"/>
                     <input type="number" id="entradas" name="cantClientes" />
             </div>
                 <button class="mt-4" type="submit" asp-action="ComprarEntrada">Comprar</button>

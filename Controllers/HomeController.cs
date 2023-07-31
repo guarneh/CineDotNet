@@ -24,8 +24,16 @@ namespace CIneDotNet.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var myContext = _context.peliculas;
-            return View(await myContext.ToListAsync());
+            if (HttpContext.Session.GetInt32("id") != null)
+            {
+                //Usuario logueado = _context.usuarios.Where(u => u.id == HttpContext.Session.GetInt32("id")).FirstOrDefault();
+                var myContext = _context.peliculas;
+                return View(await myContext.ToListAsync());
+            }
+            else
+            {
+                return RedirectToAction("index","login");
+            }
         }
 
         
