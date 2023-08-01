@@ -208,7 +208,8 @@ namespace CIneDotNet.Controllers
                         usuarioActual.Credito = usuarioActual.Credito - func.costo * cantClientes;
                         func.clientes.Add(usuarioActual);
                         _context.funciones.Update(func);
-                        
+                        _context.SaveChanges();
+
                         if (usuarioActual.Tickets.Last<FuncionUsuario>().cantEntradas > 0)
                         {
                             usuarioActual.Tickets.Last<FuncionUsuario>().cantEntradas = usuarioActual.Tickets.Last<FuncionUsuario>().cantEntradas + cantClientes;
@@ -246,19 +247,19 @@ namespace CIneDotNet.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> VerFunciones(int id)
+        public  IActionResult VerFunciones(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var funciones = _context.funciones.Include(f => f.miPelicula).Include(f => f.miSala).Where(f => f.idPelicula == id);
-            if (funciones == null)
+            var peli = _context.peliculas.Include(f => f.misFunciones).Where(f => f.id == id).FirstOrDefault();
+            if (peli == null)
             {
                 return NotFound();
             }
 
-            return View(await funciones.ToListAsync());
+            return View(peli);
         }
 
         public IActionResult CompraErronea()

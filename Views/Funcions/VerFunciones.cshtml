@@ -1,7 +1,52 @@
-﻿@model IList<CIneDotNet.Models.Funcion>;
+﻿@model CIneDotNet.Models.Pelicula;
 @{
     ViewData["Title"] = "VerFunciones";
 }
 
 <h1>VerFunciones</h1>
+
+<h2>@Html.DisplayFor(p => p.Nombre)</h2>
+
+<p>@Html.DisplayFor(p => p.Sinopsis)</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Sala
+            </th>
+            
+            <th>
+                Fecha
+            </th>
+            
+            <th>
+                Costo
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.misFunciones.Where(f => f.fecha >= DateTime.Now))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.miSala)
+                </td>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.fecha)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.costo)
+                </td>
+                <td>
+                    <a asp-action="ComprarEntrada" asp-route-id="@item.ID">Comprar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
