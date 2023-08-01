@@ -1,11 +1,26 @@
 ﻿@model CIneDotNet.Models.Usuario;
 @{
-    ViewData["Title"] = "MisDatos";
+    ViewData["Title"] = "MisDatosAdmin";
 }
 
-<h1>MisDatos</h1>
+<h1 class="m-5">MisDatosAdmin</h1>
 
-<div class="row">
+<div class="row mb-5"> 
+    <div class="col-3">
+        <a asp-action="index" asp-controller="usuarios"><button>Usuarios</button></a>
+    </div>
+    <div class ="col-3">
+        <a asp-action="index" asp-controller="peliculas"><button>Peliculas</button></a>
+    </div>
+    <div class="col-3">
+        <a asp-action="index" asp-controller="salas"><button>Salas</button></a>
+    </div>
+    <div class="col-3">
+        <a asp-action="index" asp-controller="funcions"><button>Funciones</button></a>
+    </div>
+
+</div>
+<div class="row mt-5">
     <div class="col-6">
         <div>
             <table class="table">
@@ -24,15 +39,15 @@
                             Clientes
                         </th>
                         <th>
-                           Costo
+                            Costo
                         </th>
-                       
+
                         <th>
-                            
+
                         </th>
                     </tr>
                 </thead>
-                <tbody> 
+                <tbody>
                     @foreach (var item in Model.MisFunciones.Where(f => f.fecha >= DateTime.Now))
                     {
                         <tr>
@@ -57,8 +72,8 @@
                                     <input type="number" name="cantEntradas">
                                     <button type="submit">Devolver entradas</button>
                                 </form>
-                                
-                                
+
+
                             </td>
                         </tr>
                     }
@@ -74,6 +89,7 @@
         <h2>Apellido: @Html.DisplayFor(u => u.Apellido)</h2>
         <h2>DNI: @Html.DisplayFor(u => u.DNI)</h2>
         <h2>Credito: @Html.DisplayFor(u => u.Credito)</h2>
-        
+
     </div>
 </div>
+

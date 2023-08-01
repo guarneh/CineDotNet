@@ -157,6 +157,24 @@ namespace CIneDotNet.Controllers
           return _context.usuarios.Any(e => e.id == id);
         }
 
+        
+        public IActionResult esAdmin()
+        {
+            if (HttpContext.Session.GetInt32("id") != null)
+            {
+                Usuario logueado = _context.usuarios.Include(u => u.MisFunciones).Include(U => U.Tickets).Where(u => u.id == HttpContext.Session.GetInt32("id")).FirstOrDefault();
+                if (logueado.EsAdmin)
+                {
+                    return RedirectToAction("MisDatosAdmin", "usuarios");
+                }else
+                    return RedirectToAction("MisDatos", "usuarios");
+            }
+            else
+            {
+                return RedirectToAction("index", "login");
+            }
+        }
+
         public IActionResult MisDatos() 
         {
             if (HttpContext.Session.GetInt32("id") != null)
@@ -168,6 +186,24 @@ namespace CIneDotNet.Controllers
             else
             {
                 return RedirectToAction("index","login");
+            }
+        }
+
+        public IActionResult MisDatosAdmin()
+        {
+            if (HttpContext.Session.GetInt32("id") != null)
+            {
+                Usuario logueado = _context.usuarios.Include(u => u.MisFunciones).Include(U => U.Tickets).Where(u => u.id == HttpContext.Session.GetInt32("id")).FirstOrDefault();
+                if (logueado.EsAdmin)
+                {
+                    return View(logueado);
+                }
+                else
+                    return RedirectToAction("MisDatos", "usuarios", logueado);
+            }
+            else
+            {
+                return RedirectToAction("index", "login");
             }
         }
 
