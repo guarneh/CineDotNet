@@ -22,13 +22,20 @@ namespace CIneDotNet.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string busqueda)
         {
             if (HttpContext.Session.GetInt32("id") != null)
             {
-                //Usuario logueado = _context.usuarios.Where(u => u.id == HttpContext.Session.GetInt32("id")).FirstOrDefault();
-                var myContext = _context.peliculas;
-                return View(await myContext.ToListAsync());
+                var myContext = _context.peliculas.Where(p => p.Nombre.Equals(busqueda));
+                if (myContext != null)
+                {
+                    return View(await myContext.ToListAsync());
+                }
+                if (busqueda.Equals(""))
+                {    
+                return View(await _context.peliculas.ToListAsync());
+                }else
+                    return View(await _context.peliculas.ToListAsync());
             }
             else
             {

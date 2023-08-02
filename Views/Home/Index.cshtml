@@ -19,7 +19,11 @@
         </div>
     </section>
     <div class="row">
-        <input />
+        <form asp-action="index" asp-controller="Home" method="get">
+            <input type="text" class="form-control" id="buscador" name="busqueda"/>
+            <label for="buscador"></label>
+            <input type="submit"/>
+        </form>
 
     </div>
 
