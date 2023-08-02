@@ -23,22 +23,39 @@ namespace CIneDotNet.Controllers
         public  IActionResult Login(string Mail, string Password ) 
         {
             var usuarioActual = _context.usuarios
-                .Where(u => u.Mail.Equals(Mail) && u.Password.Equals(Password))
+                .Where(u => u.Mail.Equals(Mail))
                 .FirstOrDefault();
-            if (usuarioActual != null)
+            if (usuarioActual != null && usuarioActual.Bloqueado == false)
             {
-                
-                HttpContext.Session.SetInt32("id", usuarioActual.id);
-                ViewData["userId"] = usuarioActual.id;
-                ViewData["esAdmin"] = usuarioActual.EsAdmin;
-                
-                return RedirectToAction("Details", "usuarios", usuarioActual);
-
-                
+                if (usuarioActual.Password.Equals(Password))
+                {
+                    usuarioActual.IntentosFallidos = 0;
+                    _context.usuarios.Update(usuarioActual);
+                    _context.SaveChanges();
+                    HttpContext.Session.SetInt32("id", usuarioActual.id);
+                    return RedirectToAction("EsAdmin", "usuarios");
+                }
+                else
+                {
+                    usuarioActual.IntentosFallidos++;
+                    if (usuarioActual.IntentosFallidos >= 3)
+                    {
+                        usuarioActual.Bloqueado = true;
+                        _context.usuarios.Update(usuarioActual);
+                        _context.SaveChanges();
+                        return View("index");
+                    }
+                    else
+                    {
+                        _context.usuarios.Update(usuarioActual);
+                        _context.SaveChanges();
+                        return View("index");
+                    }
+                }   
             }
             else
             { 
-                return RedirectToAction("index", "login");
+                return View("index");
             }
                 
         }

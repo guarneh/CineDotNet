@@ -199,7 +199,7 @@ namespace CIneDotNet.Controllers
                     return View(logueado);
                 }
                 else
-                    return RedirectToAction("MisDatos", "usuarios", logueado);
+                    return RedirectToAction("MisDatos", "usuarios");
             }
             else
             {
@@ -239,6 +239,24 @@ namespace CIneDotNet.Controllers
                     return NotFound();
             }
             else
+                return NotFound();
+        }
+
+        public IActionResult CargarCredito( double credito)
+        {
+            if (credito > 0)
+            { 
+                Usuario usuarioActual = _context.usuarios.Where(u => u.id == HttpContext.Session.GetInt32("id")).FirstOrDefault();
+                if (usuarioActual != null)
+                {                   
+                    usuarioActual.Credito += credito;
+                    _context.usuarios.Update(usuarioActual);
+                    _context.SaveChanges();
+                    return RedirectToAction("MisDatos");
+                }
+                else
+                    return NotFound();
+            }else
                 return NotFound();
         }
     }

@@ -74,6 +74,10 @@
         <h2>Apellido: @Html.DisplayFor(u => u.Apellido)</h2>
         <h2>DNI: @Html.DisplayFor(u => u.DNI)</h2>
         <h2>Credito: @Html.DisplayFor(u => u.Credito)</h2>
+        <form asp-action="CargarCredito" asp-controller="usuarios" method="post">
+            <input type="number" name="credito">
+            <button type="submit">Cargar Credito</button>
+        </form>
         
     </div>
 </div>
