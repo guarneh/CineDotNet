@@ -197,10 +197,11 @@ namespace CIneDotNet.Controllers
 
             if (usuarioActual != null && func != null)
             {
+                
 
                 if (func.cantClientes + cantClientes <= func.miSala.capacidad)
                 {
-                    if (usuarioActual.Credito >= func.costo * cantClientes)
+                    if (usuarioActual.Credito >= func.costo * cantClientes && cantClientes > 0)
                     {
 
                         usuarioActual.MisFunciones.Add(func);

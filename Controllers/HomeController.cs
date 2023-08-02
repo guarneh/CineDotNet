@@ -26,16 +26,16 @@ namespace CIneDotNet.Controllers
         {
             if (HttpContext.Session.GetInt32("id") != null)
             {
-                var myContext = _context.peliculas.Where(p => p.Nombre.Equals(busqueda));
-                if (myContext != null)
+                if (busqueda != null)
                 {
+                    var myContext = _context.peliculas.Where(p => p.Nombre.Equals(busqueda));
                     return View(await myContext.ToListAsync());
                 }
-                if (busqueda.Equals(""))
-                {    
-                return View(await _context.peliculas.ToListAsync());
-                }else
+                else 
+                {
                     return View(await _context.peliculas.ToListAsync());
+                }
+                    
             }
             else
             {

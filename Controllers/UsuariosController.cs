@@ -252,12 +252,13 @@ namespace CIneDotNet.Controllers
                     usuarioActual.Credito += credito;
                     _context.usuarios.Update(usuarioActual);
                     _context.SaveChanges();
-                    return RedirectToAction("MisDatos");
+                    return RedirectToAction("esAdmin","usuarios");
                 }
                 else
-                    return NotFound();
-            }else
-                return NotFound();
+                    return RedirectToAction("index", "login");
+            }
+            else
+                return RedirectToAction("esAdmin", "usuarios");
         }
     }
 }

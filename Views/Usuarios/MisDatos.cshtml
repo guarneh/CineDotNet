@@ -54,7 +54,7 @@
                             <td>
                                 <form asp-action="DevolverEntrada" asp-controller="usuarios" method="post">
                                     <input type="hidden" name="idFuncion" value="@item.ID">
-                                    <input type="number" name="cantEntradas">
+                                    <input type="number" name="cantEntradas" min="1">
                                     <button type="submit">Devolver entradas</button>
                                 </form>
                                 
@@ -75,7 +75,7 @@
         <h2>DNI: @Html.DisplayFor(u => u.DNI)</h2>
         <h2>Credito: @Html.DisplayFor(u => u.Credito)</h2>
         <form asp-action="CargarCredito" asp-controller="usuarios" method="post">
-            <input type="number" name="credito">
+            <input type="number" name="credito" min="0">
             <button type="submit">Cargar Credito</button>
         </form>
         

@@ -34,7 +34,7 @@ namespace CIneDotNet.Models
             //var connectionString = configuration.GetConnectionString("trabajo");
             //optionsBuilder.UseSqlServer(connectionString);
 
-            var connectionString = configuration.GetConnectionString("casa");
+            var connectionString = configuration.GetConnectionString("trabajo");
             optionsBuilder.UseSqlServer(connectionString);
 
         }

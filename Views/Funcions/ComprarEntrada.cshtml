@@ -15,7 +15,7 @@
                 
             <div>
                     <input type="hidden" value="@Html.DisplayFor(model => model.ID)" name="idFuncion"/>
-                    <input type="number" id="entradas" name="cantClientes" />
+                    <input type="number" id="entradas" name="cantClientes" min="0" />
             </div>
                 <button class="mt-4" type="submit" asp-action="ComprarEntrada">Comprar</button>
             </form>
