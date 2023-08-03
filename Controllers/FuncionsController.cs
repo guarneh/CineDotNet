@@ -160,10 +160,34 @@ namespace CIneDotNet.Controllers
             {
                 return Problem("Entity set 'MyContext.funciones'  is null.");
             }
-            var funcion = await _context.funciones.FindAsync(id);
-            if (funcion != null)
+            var funcion =  _context.funciones.Include( f => f.funcionUsuarios).Include(f => f.clientes).Where(f => f.ID == id).FirstOrDefault();
+            if (funcion != null )
             {
-                _context.funciones.Remove(funcion);
+                if (funcion.fecha >= DateTime.Now)
+                {
+                    if (funcion.clientes.Count() <= 0)
+                    {
+                        _context.funciones.Remove(funcion);
+                    }
+                    else
+                    {
+                        foreach (var item in funcion.clientes)
+                        {
+                            var funcFinded = _context.funcionUsuarios.Where(fu => fu.usuario == item);
+                            foreach (var ticket in funcFinded)
+                            {
+                                ticket.usuario.Credito += ticket.funcion.costo * ticket.cantEntradas;
+                                _context.usuarios.Update(ticket.usuario);
+                            }
+                        }
+                        _context.funciones.Remove(funcion);
+                    }
+                }
+                else
+                {
+                    _context.funciones.Remove(funcion);
+                }
+
             }
 
             await _context.SaveChangesAsync();
