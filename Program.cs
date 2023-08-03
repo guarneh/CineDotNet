@@ -10,8 +10,8 @@ builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddDbContext<MyContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("trabajo"));
-    //options.UseSqlServer(builder.Configuration.GetConnectionString("casa"));
+    //options.UseSqlServer(builder.Configuration.GetConnectionString("trabajo"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("casa"));
 });
 
 
