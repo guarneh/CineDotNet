@@ -9,6 +9,7 @@ using CIneDotNet.Models;
 
 namespace CIneDotNet.Controllers
 {
+    
     public class UsuariosController : Controller
     {
         private readonly MyContext _context;
@@ -21,31 +22,62 @@ namespace CIneDotNet.Controllers
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
-              return View(await _context.usuarios.ToListAsync());
+            if (ViewBag.esAdmin != null)
+            {
+                if (ViewBag.esAdmin)
+                {  
+                return View(await _context.usuarios.ToListAsync());
+                }else
+                    return RedirectToAction("Index", "login");
+            }
+            else
+                return RedirectToAction("Index","login");
         }
 
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.usuarios == null)
+            if (ViewBag.esAdmin != null)
             {
-                return NotFound();
-            }
+                if (ViewBag.esAdmin)
+                {
+                    if (id == null || _context.usuarios == null)
+                    {
+                        return NotFound();
+                    }
 
-            var usuario = await _context.usuarios
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
+                    var usuario = await _context.usuarios
+                        .FirstOrDefaultAsync(m => m.id == id);
+                    if (usuario == null)
+                    {
+                        return NotFound();
+                    }
 
-            return View(usuario);
+                    return View(usuario);
+                }
+                else
+                    return RedirectToAction("Index", "login");
+            }
+            else
+                return RedirectToAction("Index", "login");
+            
         }
 
         // GET: Usuarios/Create
         public IActionResult Create()
         {
-            return View();
+            if (ViewBag.esAdmin != null)
+            {
+                if (ViewBag.esAdmin)
+                {
+                    return View();
+                }
+                else
+                    return RedirectToAction("Index", "login");
+            }
+            else
+                return RedirectToAction("Index", "login");
+            
         }
 
         // POST: Usuarios/Create
@@ -67,17 +99,28 @@ namespace CIneDotNet.Controllers
         // GET: Usuarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.usuarios == null)
+            if (ViewBag.esAdmin != null)
             {
-                return NotFound();
-            }
+                if (ViewBag.esAdmin)
+                {
+                    if (id == null || _context.usuarios == null)
+                    {
+                        return NotFound();
+                    }
 
-            var usuario = await _context.usuarios.FindAsync(id);
-            if (usuario == null)
-            {
-                return NotFound();
+                    var usuario = await _context.usuarios.FindAsync(id);
+                    if (usuario == null)
+                    {
+                        return NotFound();
+                    }
+                    return View(usuario);
+                }
+                else
+                    return RedirectToAction("Index", "login");
             }
-            return View(usuario);
+            else
+                return RedirectToAction("Index", "login");
+            
         }
 
         // POST: Usuarios/Edit/5

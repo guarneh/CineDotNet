@@ -21,15 +21,20 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><span class="blanco">Home</span></a>
+                            <a class="nav-link"  asp-controller="Home" asp-action="Index"><span class="blanco">Home</span></a>
                         </li>
                         
+                         <li class="nav-item">
+                            <a class="nav-link" asp-controller="Login" asp-action="index"><span class="blanco">Log In</span></a>
+                         </li>  
+                         <li class="nav-item">
+                            <a class="nav-link" asp-controller="usuarios" asp-action="EsAdmin"><span class="blanco"><i class="bi bi-person-circle"></i></span></a>
+                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Login" asp-action="index"><span class="blanco">Log In</span></a>
-                        </li>  
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="usuarios" asp-action="EsAdmin"><span class="blanco"><i class="bi bi-person-circle"></i></span></a>
-                        </li>  
+                            <a class="nav-link" asp-controller="Login" asp-action="LogOut"><span class="blanco">Cerrar Sesion</span></a>
+                        </li>
+
+
                     </ul>
                 </div>
             </div>

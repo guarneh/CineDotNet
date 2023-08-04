@@ -33,6 +33,7 @@ namespace CIneDotNet.Controllers
                     _context.usuarios.Update(usuarioActual);
                     _context.SaveChanges();
                     HttpContext.Session.SetInt32("id", usuarioActual.id);
+                    ViewBag.esAdmin = usuarioActual.EsAdmin;
                     return RedirectToAction("EsAdmin", "usuarios");
                 }
                 else
@@ -61,7 +62,11 @@ namespace CIneDotNet.Controllers
         }
 
         
-
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.SetInt32("id", 0);
+            return RedirectToAction("index", "login");
+        }
         
 
         public IActionResult Register()

@@ -24,8 +24,10 @@ namespace CIneDotNet.Controllers
 
         public async Task<IActionResult> Index(string busqueda)
         {
-            if (HttpContext.Session.GetInt32("id") != null)
+            if (HttpContext.Session.GetInt32("id") != null && HttpContext.Session.GetInt32("id") != 0)
             {
+                
+                
                 if (busqueda != null)
                 {
                     var myContext = _context.peliculas.Where(p => p.Nombre.Equals(busqueda));
