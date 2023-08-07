@@ -279,12 +279,51 @@ namespace CIneDotNet.Controllers
                 return NotFound();
             }
             var peli = _context.peliculas.Include(f => f.misFunciones).Where(f => f.id == id).FirstOrDefault();
+            var funcs = _context.funciones.Include(f => f.miSala).Include(f => f.miPelicula).Where(f => f.miPelicula == peli);
             if (peli == null)
             {
                 return NotFound();
             }
+            ViewBag.MiPeli = peli;
 
-            return View(peli);
+            return View(funcs.ToList());
+        }
+
+        [HttpPost]
+        public IActionResult VerFunciones(int id,DateTime fecha)
+        {
+            
+            if (id == null)
+            {
+                return NotFound();
+            }
+            if (fecha >= DateTime.Now)
+            {
+                var peli = _context.peliculas.Include(f => f.misFunciones).Where(f => f.id == id).FirstOrDefault();
+                var funcs = _context.funciones.Include(f => f.miSala).Include(f => f.miPelicula).Where(f => f.fecha == fecha && f.miPelicula == peli);
+                if (peli == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.MiPeli = peli;
+
+                return View(funcs.ToList());
+            }
+            else
+            {
+
+                var peli = _context.peliculas.Include(f => f.misFunciones).Where(f => f.id == id).FirstOrDefault();
+                var funcs = _context.funciones.Include(f => f.miSala).Include(f => f.miPelicula).Where(f => f.miPelicula == peli );
+                if (peli == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.MiPeli = peli;
+
+                return View(funcs.ToList());
+            }
+
+            
         }
 
         public IActionResult CompraErronea()

@@ -8,6 +8,7 @@
 <div class="row">
     <div class="col-6">
         <div>
+            <p>Mis Funciones</p>
             <table class="table">
                 <thead>
                     <tr>
@@ -80,4 +81,60 @@
         </form>
         
     </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div>
+                <p>Funciones Pasadas</p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Sala
+                            </th>
+                            <th>
+                                Pelicula
+                            </th>
+                            <th>
+                                Fecha
+                            </th>
+                            <th>
+                                Clientes
+                            </th>
+                            <th>
+                                Costo
+                            </th>
+
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.MisFunciones.Where(f => f.fecha < DateTime.Now))
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.miSala.ubicacion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.miPelicula.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.fecha)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.cantClientes)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.costo)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>
