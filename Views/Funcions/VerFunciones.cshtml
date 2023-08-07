@@ -1,14 +1,22 @@
-﻿@model CIneDotNet.Models.Pelicula;
+﻿@model List<CIneDotNet.Models.Funcion>;
 @{
     ViewData["Title"] = "VerFunciones";
 }
 
 <h1>VerFunciones</h1>
 
-<h2>@Html.DisplayFor(p => p.Nombre)</h2>
+<h2>@ViewBag.MiPeli.Nombre</h2>
 
-<p>@Html.DisplayFor(p => p.Sinopsis)</p>
+<p>@ViewBag.MiPeli.Sinopsis</p>
 
+<div class="row">
+    <form asp-action="verFunciones" method="post">
+        <input type="hidden" value="@ViewBag.MiPeli.id" name="id"/>
+        <input type="datetime-local" name="fecha"/>
+        <input type="submit" />
+    </form>
+    @ViewBag.Fecha = fecha
+</div>
 
 <table class="table">
     <thead>
@@ -28,25 +36,52 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.misFunciones.Where(f => f.fecha >= DateTime.Now))
+        @if (ViewBag.Fecha != null)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.miSala)
-                </td>
-               
-                <td>
-                    @Html.DisplayFor(modelItem => item.fecha)
-                </td>
-                
-                <td>
-                    @Html.DisplayFor(modelItem => item.costo)
-                </td>
-                <td>
-                    <a asp-action="ComprarEntrada" asp-route-id="@item.ID">Comprar</a>
-                </td>
-            </tr>
+            
+            @foreach (var item in Model.Where(f => f.fecha >= DateTime.Now))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.miSala.ubicacion)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fecha)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.costo)
+                    </td>
+                    <td>
+                        <a asp-action="ComprarEntrada" asp-route-id="@item.ID">Comprar</a>
+                    </td>
+                </tr>
+            }
+
+        }else
+        {
+            @foreach (var item in Model.Where(f => f.fecha >= DateTime.Now))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.miSala.ubicacion)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fecha)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.costo)
+                    </td>
+                    <td>
+                        <a asp-action="ComprarEntrada" asp-route-id="@item.ID">Comprar</a>
+                    </td>
+                </tr>
+            }
         }
+
     </tbody>
 </table>
 
