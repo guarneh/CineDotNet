@@ -4,6 +4,7 @@ using CIneDotNet.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CIneDotNet.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20230808221626_dale")]
+    partial class dale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,32 +98,6 @@ namespace CIneDotNet.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Peliculas", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            id = 1,
-                            Duracion = 120,
-                            Nombre = "Barbie",
-                            Poster = "ken.jpg",
-                            Sinopsis = "Después de ser expulsada de Barbieland por no ser una muñeca de aspecto perfecto, Barbie parte hacia el mundo humano para encontrar la verdadera felicidad.\r\n"
-                        },
-                        new
-                        {
-                            id = 2,
-                            Duracion = 180,
-                            Nombre = "Oppenheimer",
-                            Poster = "oppenhaimer.jpeg",
-                            Sinopsis = "El físico J Robert Oppenheimer trabaja con un equipo de científicos durante el Proyecto Manhattan, que condujo al desarrollo de la bomba atómica.\r\n"
-                        },
-                        new
-                        {
-                            id = 3,
-                            Duracion = 105,
-                            Nombre = "Sound of Freedom",
-                            Poster = "freedom.jpg",
-                            Sinopsis = "Sonido De Libertad, basada en una increíble historia real, trae luz y esperanza al obscuro mundo del trafico de menores. Después de rescatar a un niño de los traficantes, un agente federal descubre que la hermana del niño todavía está cautiva y decide embarcarse en una peligrosa misión para salvarla. Con el tiempo en su contra, renuncia a su trabajo y se adentra en lo profundo de la selva colombiana, poniendo su vida en riesgo para liberarla y traerla de vuelta a casa.\r\n"
-                        });
                 });
 
             modelBuilder.Entity("CIneDotNet.Models.Sala", b =>
@@ -140,20 +117,6 @@ namespace CIneDotNet.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Salas", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            id = 1,
-                            capacidad = 50,
-                            ubicacion = "Sala A"
-                        },
-                        new
-                        {
-                            id = 2,
-                            capacidad = 30,
-                            ubicacion = "Sala B"
-                        });
                 });
 
             modelBuilder.Entity("CIneDotNet.Models.Usuario", b =>
